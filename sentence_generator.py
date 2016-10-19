@@ -12,22 +12,26 @@ def gen_sentence():
     start = 153
     end = 152
 
+    # initialize the sentence with the start word
     sentence = [start]
+    # append a word using the bigram of the start character
     sentence.append(bigrams[start].guess())
 
     while sentence[-1] != end:
+        # try to guess a word using the trigram of the previous two characters
         guess = trigrams[tuple(sentence[-2:])].guess()
 
         if guess == 0:
-            print('a')
+            # if no word was found try using the bigram
             guess = bigrams[sentence[-1]].guess()
 
         if guess == 0:
-            print('b')
+            # if still no word was found use the unigram
             guess = unigrams.guess()
 
         sentence.append(guess)
 
+    # substitute the word indices with the real words
     word_sentence = [vocab[i] for i in sentence]
     return word_sentence
 

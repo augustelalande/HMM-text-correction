@@ -81,9 +81,11 @@ if __name__ == "__main__":
     test_sentences = ["I think hat twelve thousand pounds",
                       "she haf heard them",
                       "She was ulreedy quit live",
-                      "John Knightly wasn’t hard at work",
+                      "John Knightly wasn't hard at work",
                       "he said nit word by"]
 
     for test_sentence in test_sentences:
+        print(test_sentence + " -->")
         test_sentence = test_sentence.split()
         print_sentence(viterbi(test_sentence))
+        print()

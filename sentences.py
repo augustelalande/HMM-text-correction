@@ -4,10 +4,13 @@ vocab, unigrams, bigrams, trigrams = load_data()
 
 
 def gen_sentence():
-    sentence = [153]
-    sentence.append(bigrams[153].guess())
+    start = 153
+    end = 152
 
-    while sentence[-1] != 152:
+    sentence = [start]
+    sentence.append(bigrams[start].guess())
+
+    while sentence[-1] != end:
         guess = trigrams[tuple(sentence[-2:])].guess()
 
         if guess == 0:

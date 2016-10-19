@@ -1,8 +1,15 @@
+"""Methods for loading word probabilities from files
+"""
 from collections import defaultdict
 from utils.prob_words import ProbWords
 
 
 def load_data():
+    """Summary
+
+    Returns:
+        TYPE: Description
+    """
     vocab = load_vocab()
     unigrams = load_unigrams()
     bigrams = load_bigrams()
@@ -12,6 +19,14 @@ def load_data():
 
 
 def load_vocab(src="data/vocab.txt"):
+    """Create a list matching text words to indices
+
+    Args:
+        src (str, optional): path to vocab file
+
+    Returns:
+        list: words indexed according to source file
+    """
     vocab = [None]
 
     with open(src) as f:
@@ -22,6 +37,14 @@ def load_vocab(src="data/vocab.txt"):
 
 
 def load_unigrams(src="data/unigram_counts.txt"):
+    """Create a probabilitic word generator
+
+    Args:
+        src (str, optional): path to unigrams file
+
+    Returns:
+        ProbWords: random word generator
+    """
     unigrams = ProbWords()
 
     with open(src) as f:
@@ -35,6 +58,17 @@ def load_unigrams(src="data/unigram_counts.txt"):
 
 
 def load_bigrams(src="data/bigram_counts.txt"):
+    """Create a dictionary of probabilitic word generator
+
+    index into the dictionary using the index of the word
+    preceding the desired word.
+
+    Args:
+        src (str, optional): path to bigrams file
+
+    Returns:
+        dict: dictionary of random word generators
+    """
     bigrams = defaultdict(ProbWords)
 
     with open(src) as f:
@@ -49,6 +83,18 @@ def load_bigrams(src="data/bigram_counts.txt"):
 
 
 def load_trigrams(src="data/trigram_counts.txt"):
+    """Create a dictionary of probabilitic word generator
+
+    index into the dictionary using the tuple of the indices of
+    the two words preceding the desired word.
+    key = (i - 2, i - 1)
+
+    Args:
+        src (str, optional): path to trigrams file
+
+    Returns:
+        TYPE: dictionary of random word generators
+    """
     trigrams = defaultdict(ProbWords)
 
     with open(src) as f:

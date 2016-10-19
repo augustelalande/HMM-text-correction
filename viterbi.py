@@ -1,7 +1,7 @@
 from math import factorial, exp
 from utils.edit_distance import levenshtein
-from utils.data_parser import *
-from utils.search_tree import *
+from utils.data_parser import load_vocab, load_bigrams
+from utils.search_tree import SearchTree
 
 vocab = load_vocab()
 bigrams = load_bigrams()

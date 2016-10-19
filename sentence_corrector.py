@@ -10,6 +10,15 @@ bigrams = load_bigrams()
 def correct_sentence(observations, n=3):
     """Implementation of the Viterbi algorithm to correct mistakes in a sentence
 
+    The algorithm works by generating a search tree and appending to it
+    the nodes with the highest probability at each place in the sentence.
+    It keeps track of the n children node with the highest probability
+    for each parent node in the tree.
+
+    The maximum number of nodes is therefore sentence_length ^ n. But
+    some nodes can be discarded for having a lower probability than an
+    other node representing the same word on the same level.
+
     Args:
         observations (list): List of possibly incorrect observed words
         n (int, optional): The number of children node to keep for each node in

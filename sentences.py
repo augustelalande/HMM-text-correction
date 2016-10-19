@@ -4,6 +4,11 @@ vocab, unigrams, bigrams, trigrams = load_data()
 
 
 def gen_sentence():
+    """Creates a randomly generated sentence according to some word distribution
+
+    Returns:
+        list: list of words representing the sentence
+    """
     start = 153
     end = 152
 
@@ -28,6 +33,11 @@ def gen_sentence():
 
 
 def print_sentence(sentence):
+    """Pretty print sentence list
+
+    Args:
+        sentence (list): list of words to print
+    """
     text = sentence[1]
     punctuation = ['.', ',', ';', ':', '!', '?']
 
@@ -37,5 +47,6 @@ def print_sentence(sentence):
         text += word
     print(text)
 
-sentence = gen_sentence()
-print_sentence(sentence)
+if __name__ == "__main__":
+    sentence = gen_sentence()
+    print_sentence(sentence)

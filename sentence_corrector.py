@@ -7,7 +7,7 @@ vocab = load_vocab()
 bigrams = load_bigrams()
 
 
-def viterbi(observations, n=3):
+def correct_sentence(observations, n=3):
     """Implementation of the Viterbi algorithm to correct mistakes in a sentence
 
     Args:
@@ -91,5 +91,5 @@ if __name__ == "__main__":
     for test_sentence in test_sentences:
         print(test_sentence + " -->")
         test_sentence = test_sentence.split()
-        print_sentence(viterbi(test_sentence))
+        print_sentence(correct_sentence(test_sentence))
         print()

@@ -60,30 +60,3 @@ def load_trigrams(src="data/trigram_counts.txt"):
             prob = 10 ** log_prob
             trigrams[key].push(item, prob)
     return trigrams
-
-
-def load_inverse_bigrams(unigrams, src="data/bigram_counts.txt"):
-    inverse_bigrams = defaultdict(ProbWords)
-
-    with open(src) as f:
-        for line in f:
-            words = line.split()
-            key = int(words[1])
-            item = int(words[0])
-            log_prob = float(words[2])
-            conditional = 10 ** log_prob
-            A_prob = unigrams.word_prob(key)
-            B_prob = unigrams.word_prob(item)
-            prob = conditional * A_prob / B_prob
-            inverse_bigrams[key].push(item, prob)
-    return inverse_bigrams
-
-
-def load_word_keys(src="data/vocab.txt"):
-    word_keys = {}
-
-    with open(src) as f:
-        for line in f:
-            words = line.split()
-            word_keys[words[1]] = int(words[0])
-    return vocab

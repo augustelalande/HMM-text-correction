@@ -2,7 +2,10 @@
 
 To generate a random sentence run:
 ```
-python3 sentences.py
+python3 sentence_generator.py
 ```
 
-To
+To demonstrate the correction of sentences run:
+```
+python3 sentence_corrector.py
+```

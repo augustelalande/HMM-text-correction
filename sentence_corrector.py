@@ -20,13 +20,14 @@ def correct_sentence(observations, n=3):
     other node representing the same word on the same level.
 
     Args:
-        observations (list): List of possibly incorrect observed words
+        observations (str): String of possibly incorrect observed words
         n (int, optional): The number of children node to keep for each node in
                            the search tree.
 
     Returns:
         list: list of words describing a corrected sentence
     """
+    observations = observations.split()
     tree = SearchTree()
 
     for level, o in enumerate(observations):
@@ -45,6 +46,8 @@ def correct_sentence(observations, n=3):
 
             # push the best nodes onto their parent
             for w, p in zip(best_words, best_probs):
+                if w == 0:
+                    continue
                 tree.push(node, w, p)
 
     leaf_level = len(observations)
@@ -57,8 +60,30 @@ def correct_sentence(observations, n=3):
             best_leaf = node
 
     sentence = [vocab[w] for w in tree.path(best_leaf)]
-
     return sentence
+
+
+def print_tree(tree, observations, max_depth=4):
+    """Pretty print search tree
+
+    Args:
+        tree (SearchTree): tree to print
+        observations (list): list of observed words
+        max_depth (int, optional): depth to which to print the tree
+    """
+    for i in range(1, max_depth):
+        for node in tree.level(i):
+            print("level:", i)
+            print("parent:", vocab[node.parent.word])
+            print("word:", vocab[node.word])
+            ldist = levenshtein(observations[i - 1], vocab[node.word])
+            print("Levenshtein Distance:", ldist)
+            bi_prob = bigrams[node.parent.word].word_prob(node.word)
+            obsv_prob = observation_prob(observations[i - 1], vocab[node.word])
+            interp_prob = bi_prob * obsv_prob
+            print("Interpretation Prob:", "{:.3}".format(interp_prob))
+            print("Cumulative Prob:", "{:.3}".format(node.prob))
+            print()
 
 
 def observation_prob(obsv, hidden, lam=0.01):
@@ -99,6 +124,8 @@ if __name__ == "__main__":
 
     for test_sentence in test_sentences:
         print(test_sentence + " -->")
-        test_sentence = test_sentence.split()
-        print_sentence(correct_sentence(test_sentence))
+        corrected_sentence = " ".join(correct_sentence(test_sentence))
+        print(corrected_sentence)
+        ldist = levenshtein(test_sentence, corrected_sentence)
+        print("Levenshtein Distance:", ldist)
         print()

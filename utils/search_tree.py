@@ -43,6 +43,9 @@ class SearchTree(object):
         level = parent.level + 1
         node = Node(word, prob, parent, level)
         if word in self.levels[level].keys():
+            # if a node already exists but with a lower probability
+            # replace with the new node since only the higher probability one
+            # can possibly lead to the optimal solution
             if prob > self.levels[level][word].prob:
                 self.levels[level][word] = node
         else:

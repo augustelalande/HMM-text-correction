@@ -22,6 +22,7 @@ def viterbi(observations, n=3):
 
     for level, o in enumerate(observations):
         for node in tree.level(level):
+            # keep track of the best n words to expand the tree
             best_probs = [0 for _ in range(n)]
             best_words = [0 for _ in range(n)]
 
@@ -33,12 +34,15 @@ def viterbi(observations, n=3):
                     best_probs[index] = prob
                     best_words[index] = word
 
-            for p, w in zip(best_probs, best_words):
+            # push the best nodes onto their parent
+            for w, p in zip(best_words, best_probs):
                 tree.push(node, w, p)
 
     leaf_level = len(observations)
+    # initialize best leaf with a dummy node with probability 0
     best_leaf = Node(0, 0, None, 0)
 
+    # find best leaf
     for node in tree.level(leaf_level):
         if node.prob > best_leaf.prob:
             best_leaf = node
